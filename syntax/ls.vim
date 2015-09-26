@@ -7,15 +7,15 @@ if exists('b:current_syntax') && b:current_syntax == 'livescript'
   finish
 endif
 
-let b:current_syntax = "ls"
+"let b:current_syntax = "livescript"
 
 " Highlight long strings.
 syntax sync minlines=100
 
-setlocal iskeyword=48-57,A-Z,$,a-z,_,-
+"setlocal iskeyword=48-57,A-Z,$,a-z,_,-
 
 syntax match lsIdentifier /[$A-Za-z_]\k*\(-[a-zA-Z]\+\)*/
-highlight default link lsIdentifier Identifier
+"highlight default link lsIdentifier Identifier
 
 " These are 'matches' rather than 'keywords' because vim's highlighting priority
 " for keywords (the highest) causes them to be wrongly highlighted when used as
@@ -40,7 +40,7 @@ highlight default link lsBoolean Boolean
 
 " Matches context variables.
 syntax match lsContext /\<\%(this\|arguments\|it\|that\|constructor\|prototype\|superclass\)\>/
-highlight default link lsContext Type
+highlight default link lsContext Identifier
 
 " Keywords reserved by the language
 syntax cluster lsReserved contains=lsStatement,lsRepeat,lsConditional,
@@ -48,7 +48,7 @@ syntax cluster lsReserved contains=lsStatement,lsRepeat,lsConditional,
 
 " Matches ECMAScript 5 built-in globals.
 syntax match lsGlobal /\<\%(Array\|Boolean\|Date\|Function\|JSON\|Math\|Number\|Object\|RegExp\|String\|\%(Syntax\|Type\|URI\)\?Error\|is\%(NaN\|Finite\)\|parse\%(Int\|Float\)\|\%(en\|de\)codeURI\%(Component\)\?\)\>/
-highlight default link lsGlobal Structure
+highlight default link lsGlobal Include
 
 syntax region lsString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@lsInterpString
 syntax region lsString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@lsSimpleString
@@ -59,8 +59,10 @@ syntax match lsFloat
 \ /\%(\<-\?\|-\)\zs\d[0-9_]*\%(\.\d[0-9_]*\)\?\%(e[+-]\?\d[0-9_]*\)\?\%([a-zA-Z$][$a-zA-Z0-9_]*\)\?/
 \ contains=lsNumberComment
 highlight default link lsFloat Float
+
 syntax match lsNumberComment /\d\+\zs\%(e[+-]\?\d\)\@![a-zA-Z$][$a-zA-Z0-9_]*/ contained
 highlight default link lsNumberComment Comment
+
 " Matches hex numbers like 0xfff, 0x000.
 syntax match lsNumber /\%(\<-\?\|-\)\zs0x\x\+/
 " Matches N radix numbers like 2@1010.
@@ -71,6 +73,9 @@ highlight default link lsNumber Number
 " Displays an error for reserved words.
 syntax match lsReservedError /\<\%(enum\|interface\|package\|private\|protected\|public\|static\)\>/
 highlight default link lsReservedError Error
+
+syntax match lsOperator "[-#!%&\*\+/<=>\?@^|~:.]\+"
+highlight default link lsOperator Operator
 
 syntax keyword lsTodo TODO FIXME XXX contained
 highlight default link lsTodo Todo
@@ -104,6 +109,7 @@ syntax region lsRegex start=/\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!\/\*\@!/
 \                     skip=/\[[^]]\{-}\/[^]]\{-}\]/
 \                     end=/\/[gimy$]\{,4}/
 \                     oneline contains=@lsSimpleString
+
 syntax region lsHeregex start=/\/\// end=/\/\/[gimy$?]\{,4}/ contains=@lsInterpString,lsComment,lsSpaceError fold
 highlight default link lsHeregex lsRegex
 highlight default link lsRegex String
