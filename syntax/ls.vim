@@ -12,10 +12,10 @@ endif
 " Highlight long strings.
 syntax sync minlines=100
 
-"setlocal iskeyword=48-57,A-Z,$,a-z,_,-
+setlocal iskeyword=48-57,A-Z,$,a-z,_,-
 
-syntax match lsIdentifier /[$A-Za-z_]\k*\(-[a-zA-Z]\+\)*/
-"highlight default link lsIdentifier Identifier
+syntax match lsIdentifier /\$[^A-Za-z_0-9]/
+highlight default link lsIdentifier Include
 
 " These are 'matches' rather than 'keywords' because vim's highlighting priority
 " for keywords (the highest) causes them to be wrongly highlighted when used as
@@ -125,8 +125,11 @@ syntax region lsWords start=/<\[/ end=/\]>/ contains=fold
 highlight default link lsWords String
 
 " Reserved words can be used as property names.
-syntax match lsProp /[$A-Za-z_]\k*[ \t]*:[:=]\@!/
+syntax match lsProp /\%([$A-Za-z_]\k*[ \t]*:[:=]\@!\|-[$A-Za-z_]\k*\)/
 highlight default link lsProp Label
+
+syntax match lsFunc /[.!][A-Za-z_][A-Za-z0-9_]*/ contains=lsOperator
+highlight default link lsFunc Function
 
 syntax match lsKey
 \ /\%(\.\@<!\.\%(=\?\s*\|\.\)\|[]})@?]\|::\)\zs\k\+/
