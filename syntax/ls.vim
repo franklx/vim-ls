@@ -74,7 +74,7 @@ highlight default link lsNumber Number
 syntax match lsReservedError /\<\%(enum\|interface\|package\|private\|protected\|public\|static\)\>/
 highlight default link lsReservedError Error
 
-syntax match lsOperator "[-#!%&\*\+/<=>\?@^|~:.]\+"
+syntax match lsOperator "[-#!%&\*+/<=>\?@^|~:.]\+"
 highlight default link lsOperator Operator
 
 syntax keyword lsTodo TODO FIXME XXX contained
@@ -125,7 +125,7 @@ syntax region lsWords start=/<\[/ end=/\]>/ contains=fold
 highlight default link lsWords String
 
 " Reserved words can be used as property names.
-syntax match lsProp /\%([$A-Za-z_]\k*[ \t]*:[:=]\@!\|[-\+][$A-Za-z_]\k*\)/
+syntax match lsProp /\%([$A-Za-z_]\k*[ \t]*:[:=]\@!\|[-+][$A-Za-z_]\k*\)/
 highlight default link lsProp Label
 
 syntax match lsFunc /[.!][A-Za-z_][A-Za-z0-9_]*/ contains=lsOperator
